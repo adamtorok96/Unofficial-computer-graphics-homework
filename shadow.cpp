@@ -91,6 +91,7 @@ void display(void)
 
 	crawler.render();
 	interceptor.render();
+    logo.render();
 
 	glutSwapBuffers();
 }
@@ -113,6 +114,7 @@ void init(void)
 	imageProcessor.init();
 	crawler.init();
 	interceptor.init();
+    logo.init();
 }
 
 void keyboard (unsigned char key, int x, int y)
@@ -128,18 +130,14 @@ void keyboard (unsigned char key, int x, int y)
 		crawler.arrowTrollStartTimeSec = gameController.timeSinceInitCompleted;
 		break;
 	case 13:
-        printf("enter %d\n", gameController.userControlOn);
-            printf("%f %f %f\n", gameController.timeSinceInitCompleted, gameController.timeGameStart,
-                   gameController.timeOfTransitionFromIntroEndToUserControl);
 
 		if ((gameController.timeSinceInitCompleted >= gameController.timeIntro)  && (gameController.timeGameStart < 0.0))
 		{
-            printf("2\n");
             gameController.timeGameStart = gameController.timeSinceInitCompleted;
-		} /*else {
+		} else {
             gameController.skipIntro();
             gameController.timeGameStart = gameController.timeSinceInitCompleted;
-        }*/
+        }
 
 		break;
 	case 'w':

@@ -12,13 +12,16 @@
 #include "ImageProcessor.h"
 #include "Avatar.h"
 #include "CrawlerScroll.h"
+#include "Logo.h"
 
 using namespace std;
 
 GameControl gameController;
 ImageProcessor imageProcessor;
+
 Avatar interceptor(&gameController, &imageProcessor);
 CrawlerScroll crawler(&gameController);
+Logo logo;
 
 void display(void);
 void idle();
