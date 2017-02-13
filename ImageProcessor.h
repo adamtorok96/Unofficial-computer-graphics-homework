@@ -2,7 +2,7 @@
 #define SHADOW_IMAGEPROCESSOR_H
 
 #include <opencv2/opencv.hpp>
-#include "utility2d3d.hpp"
+//#include "utility2d3d.hpp"
 #include "GameElement.h"
 #include "ImageSource.h"
 #include "FileImageSource.h"

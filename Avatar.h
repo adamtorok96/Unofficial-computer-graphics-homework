@@ -8,6 +8,7 @@
 #include "ImageProcessor.h"
 #include "GameElement.h"
 #include "GameControl.h"
+#include "Mesh.h"
 
 
 class Avatar : public GameElement {

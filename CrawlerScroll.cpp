@@ -1,4 +1,5 @@
 #include "CrawlerScroll.h"
+#include "shadow.h"
 
 void CrawlerScroll::init()
 {

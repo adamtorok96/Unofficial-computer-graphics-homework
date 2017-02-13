@@ -1,4 +1,5 @@
 #include "ImageProcessor.h"
+#include "utility2d3d.hpp"
 
 
 ImageProcessor::ImageProcessor() : auxImage(180, 320, CV_8UC1) {}

@@ -1,4 +1,5 @@
 #include "Avatar.h"
+#include "shadow.h"
 
 void Avatar::init()
 {
