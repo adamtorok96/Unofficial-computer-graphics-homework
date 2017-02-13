@@ -18,7 +18,6 @@ class Logo : public GameElement {
 
     FileImageSource imageSource;
     cv::Mat image;
-    //GLuint image;
 
 public:
     void init();

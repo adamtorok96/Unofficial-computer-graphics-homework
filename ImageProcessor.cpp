@@ -17,8 +17,9 @@ void ImageProcessor::render()
     imgSource->getImage(captured);
     if (!prevCaptured.data) prevCaptured = captured;
     cv::Point2f actualFlow = calculateFlow();
-//		virtualMouseDeltaX += actualFlow.x * 0.002;
-//		virtualMouseDeltaY += actualFlow.y * 0.002;
+
+		virtualMouseDeltaX += actualFlow.x * 0.002;
+		virtualMouseDeltaY += actualFlow.y * 0.002;
 
     cv::imshow(ImageProcessWindowName, prevCaptured);
     cv::waitKey(1);
