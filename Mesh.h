@@ -14,7 +14,9 @@ struct PairOrder
     {
         return lhs.first < rhs.first;
     }
-} po;
+};
+
+static PairOrder po;
 
 class Mesh {
 

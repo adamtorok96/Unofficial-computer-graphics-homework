@@ -23,8 +23,8 @@ static ImageProcessor imageProcessor;
 using namespace std;
 
 
-Avatar interceptor;
-CrawlerScroll crawler;
+static Avatar interceptor;
+static CrawlerScroll crawler;
 
 
 void display(void);
