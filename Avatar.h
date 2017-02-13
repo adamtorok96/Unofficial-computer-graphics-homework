@@ -1,23 +1,25 @@
 #ifndef SHADOW_AVATAR_H
 #define SHADOW_AVATAR_H
 
-#include <algorithm>
 
-#include "utility2d3d.hpp"
-
-#include "ImageProcessor.h"
 #include "GameElement.h"
-#include "GameControl.h"
 #include "Mesh.h"
+#include "GameControl.h"
+#include "ImageProcessor.h"
 
 
 class Avatar : public GameElement {
+
+    GameControl *gameController;
+    ImageProcessor *imageProcessor;
 
     Mesh spaceShip;
 
     void transform();
 
 public:
+
+    Avatar(GameControl *gameControl, ImageProcessor *imgProcessor);
 
     void init();
     void render();

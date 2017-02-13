@@ -1,6 +1,5 @@
 #include "shadow.h"
 
-
 int main(int argc, char** argv)
 {
     try
@@ -10,7 +9,9 @@ int main(int argc, char** argv)
         glutInitWindowSize(600, 600);
         glutInitWindowPosition(420, 0);
         glutCreateWindow("Press space to feed the troll :)");
+
         init();
+
         glutIdleFunc(idle);
         glutDisplayFunc(display);
         glutReshapeFunc(reshape);
@@ -24,7 +25,6 @@ int main(int argc, char** argv)
 
     return 0;
 }
-
 
 void display(void)
 {
@@ -46,8 +46,12 @@ void display(void)
 	else
 	{
 		char msg[256];
-		if (gameController.timeSinceInitCompleted < gameController.timeIntro) sprintf(msg, "Game starts in %d seconds...", int(gameController.timeIntro - gameController.timeSinceInitCompleted + 1));
-		else sprintf(msg, "Press Enter to play!");
+
+		if (gameController.timeSinceInitCompleted < gameController.timeIntro)
+			sprintf(msg, "Game starts in %d seconds...", int(gameController.timeIntro - gameController.timeSinceInitCompleted + 1));
+		else
+			sprintf(msg, "Press Enter to play!");
+
 		imageProcessor.renderString(msg);
 	}
 
@@ -91,14 +95,10 @@ void display(void)
 	glutSwapBuffers();
 }
 
-
-
 void idle()
 {
 	glutPostRedisplay();
 }
-
-
 
 void reshape(int w, int h)
 {
@@ -108,16 +108,12 @@ void reshape(int w, int h)
    gluPerspective(60.0, (GLfloat) w/(GLfloat) h, 0.1, 50.0);
 }
 
-
-
 void init(void)
 {
 	imageProcessor.init();
 	crawler.init();
 	interceptor.init();
 }
-
-
 
 void keyboard (unsigned char key, int x, int y)
 {
@@ -132,15 +128,18 @@ void keyboard (unsigned char key, int x, int y)
 		crawler.arrowTrollStartTimeSec = gameController.timeSinceInitCompleted;
 		break;
 	case 13:
-        printf("enter\n");
+        printf("enter %d\n", gameController.userControlOn);
+            printf("%f %f %f\n", gameController.timeSinceInitCompleted, gameController.timeGameStart,
+                   gameController.timeOfTransitionFromIntroEndToUserControl);
 
 		if ((gameController.timeSinceInitCompleted >= gameController.timeIntro)  && (gameController.timeGameStart < 0.0))
 		{
+            printf("2\n");
             gameController.timeGameStart = gameController.timeSinceInitCompleted;
-		} else {
+		} /*else {
             gameController.skipIntro();
             gameController.timeGameStart = gameController.timeSinceInitCompleted;
-        }
+        }*/
 
 		break;
 	case 'w':

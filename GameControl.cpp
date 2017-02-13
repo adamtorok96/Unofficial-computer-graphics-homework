@@ -1,4 +1,5 @@
 #include "GameControl.h"
+#include <GL/freeglut.h>
 
 GameControl::GameControl()
         : userControlOn(false)
@@ -9,12 +10,12 @@ GameControl::GameControl()
 
 void GameControl::captureTimeSinceInitCompleted()
 {
-    timeSinceInitCompleted = (float) (glutGet(GLUT_ELAPSED_TIME) / 1000.0 - timeOfInitCompleted + timeSkip);
+    timeSinceInitCompleted = (glutGet(GLUT_ELAPSED_TIME) / 1000.0 - timeOfInitCompleted + timeSkip);
 }
 
 void GameControl::setTimeOfInitCompleted()
 {
-    timeOfInitCompleted = (float) (glutGet(GLUT_ELAPSED_TIME) / 1000.0);
+    timeOfInitCompleted = (glutGet(GLUT_ELAPSED_TIME) / 1000.0);
 }
 
 void GameControl::skipIntro()

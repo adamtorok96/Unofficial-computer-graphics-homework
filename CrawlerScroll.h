@@ -1,12 +1,14 @@
 #ifndef SHADOW_CRAWLERSCROLL_H
 #define SHADOW_CRAWLERSCROLL_H
 
-#include "utility2d3d.hpp"
+#include <GL/freeglut.h>
 
 #include "GameElement.h"
 #include "GameControl.h"
 
 class CrawlerScroll : public GameElement {
+
+    GameControl *gameController;
 
     int trollPhase;
     static const int numTrollPhases = 12;
@@ -20,6 +22,8 @@ class CrawlerScroll : public GameElement {
 
 public:
     float arrowTrollStartTimeSec;
+
+    CrawlerScroll(GameControl *gameControl);
 
     void init();
     void render();

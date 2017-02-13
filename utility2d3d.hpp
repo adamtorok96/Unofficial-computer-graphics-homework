@@ -16,7 +16,6 @@
 #include <GL/glut.h>
 #endif
 
-#include <GL/glew.h>
 #include <GL/freeglut.h>
 
 #include <opencv2/opencv.hpp>

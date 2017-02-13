@@ -1,5 +1,9 @@
 #include "Avatar.h"
-#include "shadow.h"
+
+Avatar::Avatar(GameControl *gameControl, ImageProcessor *imgProcessor) {
+    gameController = gameControl;
+    imageProcessor = imgProcessor;
+}
 
 void Avatar::init()
 {
@@ -16,32 +20,34 @@ void Avatar::render()
 
 void Avatar::transform()
 {
-    float t = gameController.timeSinceInitCompleted < gameController.timeIntro ? t = 0 : t = gameController.timeSinceInitCompleted - gameController.timeIntro;
+    float t = gameController->timeSinceInitCompleted < gameController->timeIntro
+              ? 0
+              : gameController->timeSinceInitCompleted - gameController->timeIntro;
 
     glTranslatef(-0.47, -2.6, 2.0);
 
     float percent;
 
-    if (gameController.timeGameStart < 0.0)
+    if (gameController->timeGameStart < 0.0)
     {
         percent = 1.0;
     }
     else
     {
-        if (gameController.timeSinceInitCompleted - gameController.timeGameStart < gameController.timeOfTransitionFromIntroEndToUserControl)
+        if (gameController->timeSinceInitCompleted - gameController->timeGameStart < gameController->timeOfTransitionFromIntroEndToUserControl)
         {
-            percent = 1.0 - (gameController.timeSinceInitCompleted - gameController.timeGameStart);
+            percent = 1.0 - (gameController->timeSinceInitCompleted - gameController->timeGameStart);
         }
         else
         {
             percent = 0.0;
-            gameController.userControlOn = true;
+            gameController->userControlOn = true;
         }
     }
 
-    if (gameController.userControlOn)
+    if (gameController->userControlOn)
     {
-        glTranslatef(imageProcessor.virtualMouseDeltaX, 0, -imageProcessor.virtualMouseDeltaY);
+        glTranslatef(imageProcessor->virtualMouseDeltaX, 0, -imageProcessor->virtualMouseDeltaY);
     }
 
     glTranslatef((1.0 - percent) * 0.47, (1.0 - percent) * 0.0, (1.0 - percent) * -2.0);

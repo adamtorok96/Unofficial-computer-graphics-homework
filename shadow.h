@@ -7,25 +7,18 @@
 #pragma warning(disable: 4996)
 #endif // Win32 platform
 
-#include "utility2d3d.hpp"
 
 #include "GameControl.h"
-
-static GameControl gameController;
-
 #include "ImageProcessor.h"
-
-static ImageProcessor imageProcessor;
-
-#include "CrawlerScroll.h"
 #include "Avatar.h"
+#include "CrawlerScroll.h"
 
 using namespace std;
 
-
-static Avatar interceptor;
-static CrawlerScroll crawler;
-
+GameControl gameController;
+ImageProcessor imageProcessor;
+Avatar interceptor(&gameController, &imageProcessor);
+CrawlerScroll crawler(&gameController);
 
 void display(void);
 void idle();

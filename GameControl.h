@@ -1,8 +1,6 @@
 #ifndef SHADOW_GAMECONTROL_H
 #define SHADOW_GAMECONTROL_H
 
-#include <GL/freeglut.h>
-
 class GameControl {
 
     float timeOfInitCompleted;
@@ -21,6 +19,8 @@ public:
     void captureTimeSinceInitCompleted();
     void setTimeOfInitCompleted();
     void skipIntro();
+
+
 
 };
 

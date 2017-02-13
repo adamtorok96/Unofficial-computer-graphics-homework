@@ -1,5 +1,9 @@
 #include "CrawlerScroll.h"
-#include "shadow.h"
+#include "utility2d3d.hpp"
+
+CrawlerScroll::CrawlerScroll(GameControl *gameControl) {
+    gameController = gameControl;
+}
 
 void CrawlerScroll::init()
 {
@@ -52,7 +56,7 @@ void CrawlerScroll::render()
     glVertex2f(trollLeftX, trollBottomY);
     glEnd();
 
-    renderArrowAndCalculateTrollPhase(gameController.timeSinceInitCompleted);
+    renderArrowAndCalculateTrollPhase(gameController->timeSinceInitCompleted);
 
     glDisable(GL_TEXTURE_2D);
     glEnable(GL_DEPTH_TEST);

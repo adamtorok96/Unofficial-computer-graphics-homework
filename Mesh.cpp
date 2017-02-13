@@ -1,6 +1,6 @@
 #include "Mesh.h"
 
-Mesh::Mesh() : defaultMaterial(0){}
+Mesh::Mesh() : defaultMaterial(0) {}
 
 GLfloat* Mesh::getMaterial(int materialIndex)
 {
@@ -15,7 +15,10 @@ GLfloat* Mesh::getMaterial(int materialIndex)
                     {0.1, 0.1, 1.0, 0.5},
                     {0.9, 0.2, 0.2, 0.7}
             };
-    if (materialIndex >= sizeof(colors)/sizeof(float[4])) materialIndex=0;
+
+    if (materialIndex >= sizeof(colors)/sizeof(float[4]))
+        materialIndex=0;
+
     return colors[materialIndex];
 }
 
