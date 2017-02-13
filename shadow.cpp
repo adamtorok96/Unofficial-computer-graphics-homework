@@ -93,6 +93,11 @@ public:
 		timeOfInitCompleted = glutGet(GLUT_ELAPSED_TIME) / 1000.0;
 	}
 
+    void skipIntro()
+    {
+        timeSkip = timeIntro;
+    }
+
 	bool userControlOn;
 	float timeSinceInitCompleted;
 	float timeGameStart;
@@ -101,7 +106,7 @@ public:
 
 private:
 	float timeOfInitCompleted;
-	const float timeSkip = 0.0;
+	float timeSkip = 0.0;
 } gameController;
 
 
@@ -433,9 +438,12 @@ void display(void)
 	const float gameStartPosition   = (crawlTime+stopInterval)*speed - stopInterval*stopInterval*accel/2.0;
 	float globalCameraPosition;
 
-	if (gameController.timeSinceInitCompleted < crawlTime) globalCameraPosition = gameController.timeSinceInitCompleted*speed;
-	else if (gameController.timeSinceInitCompleted < crawlTime+stopInterval) globalCameraPosition = gameController.timeSinceInitCompleted*speed - (gameController.timeSinceInitCompleted-crawlTime)*(gameController.timeSinceInitCompleted-crawlTime)*accel/2.0;
-		 else globalCameraPosition = gameStartPosition;
+	if (gameController.timeSinceInitCompleted < crawlTime)
+        globalCameraPosition = gameController.timeSinceInitCompleted*speed;
+	else if (gameController.timeSinceInitCompleted < crawlTime+stopInterval)
+        globalCameraPosition = gameController.timeSinceInitCompleted*speed - (gameController.timeSinceInitCompleted-crawlTime)*(gameController.timeSinceInitCompleted-crawlTime)*accel/2.0;
+    else
+        globalCameraPosition = gameStartPosition;
 
 	glClearColor(0,0,0,1);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -504,10 +512,16 @@ void keyboard (unsigned char key, int x, int y)
 		crawler.arrowTrollStartTimeSec = gameController.timeSinceInitCompleted;
 		break;
 	case 13:
-		if ((gameController.timeSinceInitCompleted >= gameController.timeIntro) && (gameController.timeGameStart < 0.0))
+        printf("enter\n");
+
+		if ((gameController.timeSinceInitCompleted >= gameController.timeIntro)  && (gameController.timeGameStart < 0.0))
 		{
-			gameController.timeGameStart = gameController.timeSinceInitCompleted;
-		}
+            gameController.timeGameStart = gameController.timeSinceInitCompleted;
+		} else {
+            gameController.skipIntro();
+            gameController.timeGameStart = gameController.timeSinceInitCompleted;
+        }
+
 		break;
 	case 'w':
 	case 'W':
