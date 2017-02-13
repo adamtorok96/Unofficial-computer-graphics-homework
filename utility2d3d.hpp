@@ -25,6 +25,8 @@
 #include "getline.h"
 #endif
 
+#ifndef UTILITY_2D_3D
+#define UTILITY_2D_3D
 
 
 void drawTextToCenter(cv::Mat &img, const char *text)
@@ -284,3 +286,5 @@ struct Mesh
 		sortByColorIndex();
 	}
 };
+
+#endif
