@@ -13,6 +13,7 @@
 #include "Avatar.h"
 #include "CrawlerScroll.h"
 #include "Logo.h"
+#include "CameraWindow.h"
 
 using namespace std;
 
@@ -22,6 +23,8 @@ ImageProcessor imageProcessor;
 Avatar interceptor(&gameController, &imageProcessor);
 CrawlerScroll crawler(&gameController);
 Logo logo;
+
+CameraWindow cameraWindow;
 
 void display(void);
 void idle();

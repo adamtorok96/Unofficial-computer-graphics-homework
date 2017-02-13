@@ -92,6 +92,7 @@ void display(void)
 	crawler.render();
 	interceptor.render();
     logo.render();
+	cameraWindow.render();
 
 	glutSwapBuffers();
 }
@@ -115,6 +116,7 @@ void init(void)
 	crawler.init();
 	interceptor.init();
     logo.init();
+	cameraWindow.init();
 }
 
 void keyboard (unsigned char key, int x, int y)

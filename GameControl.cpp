@@ -20,5 +20,8 @@ void GameControl::setTimeOfInitCompleted()
 
 void GameControl::skipIntro()
 {
-    timeSkip = timeIntro;
+    if( timeSinceInitCompleted < timeIntro ) {
+        timeSkip = timeIntro;
+        timeGameStart = timeSinceInitCompleted;
+    }
 }
