@@ -1,7 +1,7 @@
 #include "Logo.h"
-#include "utility2d3d.hpp"
 
 void Logo::init() {
+    imageSource.setFlags(CV_LOAD_IMAGE_UNCHANGED);
     imageSource.init(0, "media/web_hi_res_512.png");
     imageSource.getImage(image);
 
@@ -10,12 +10,9 @@ void Logo::init() {
 }
 
 void Logo::render() {
-    //glPixelZoom(0.5f, 0.5f);
-    
-    glMatrixMode( GL_MODELVIEW );
+    glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
-    //glLoadIdentity();
-    glRasterPos3f(0, 0, -1.f);
+
+    glRasterPos3f(-0.55f, 0.475, -1.f);
     glDrawPixels(SIZE, SIZE, GL_BGRA, GL_UNSIGNED_BYTE, image.data);
-   // glFlush();
 }

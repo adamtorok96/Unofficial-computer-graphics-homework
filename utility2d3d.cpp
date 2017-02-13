@@ -17,7 +17,7 @@ GLuint createTextureFromFile(const char *filename)
     if (0 == cvImage.rows*cvImage.cols) throw filename;
 
     std::vector<GLubyte> uImage;
-    uImage.reserve(cvImage.rows*cvImage.cols * 3);
+    uImage.reserve(cvImage.rows * cvImage.cols * 3);
 
     for (int i = cvImage.rows - 1; i >= 0; i--)
     {

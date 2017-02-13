@@ -8,6 +8,10 @@
 #include "GameElement.h"
 #include "FileImageSource.h"
 
+#ifndef CV_LOAD_IMAGE_UNCHANGED
+#define CV_LOAD_IMAGE_UNCHANGED -1
+#endif
+
 class Logo : public GameElement {
 
     static const int SIZE = 64;

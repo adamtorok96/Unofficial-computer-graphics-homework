@@ -2,13 +2,7 @@
 
 FileImageSource::FileImageSource()
 {
-    //flags = CV_LOAD_IMAGE_GRAYSCALE;
-    flags = CV_LOAD_IMAGE_COLOR;
-    filenameFormat[0] = 0;
-}
-
-FileImageSource::FileImageSource(int flags) {
-    this->flags = flags;
+    flags = CV_LOAD_IMAGE_GRAYSCALE;
     filenameFormat[0] = 0;
 }
 
@@ -45,4 +39,8 @@ bool FileImageSource::getImage(cv::Mat &img)
     }
 
     return (bool) (img.rows | img.cols);
+}
+
+void FileImageSource::setFlags(int flags) {
+    this->flags = flags;
 }

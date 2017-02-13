@@ -13,7 +13,8 @@ class FileImageSource : public virtual ImageSource {
 
 public:
     FileImageSource();
-    FileImageSource(int flags);
+
+    void setFlags(int flags);
 
     bool init(int intParam, const char *strParam);
     bool getImage(cv::Mat &img);
