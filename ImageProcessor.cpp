@@ -15,14 +15,18 @@ void ImageProcessor::init()
 void ImageProcessor::render()
 {
     imgSource->getImage(captured);
-    if (!prevCaptured.data) prevCaptured = captured;
+
+    if (!prevCaptured.data)
+        prevCaptured = captured;
+
     cv::Point2f actualFlow = calculateFlow();
 
-		virtualMouseDeltaX += actualFlow.x * 0.002;
-		virtualMouseDeltaY += actualFlow.y * 0.002;
+    virtualMouseDeltaX += actualFlow.x * 0.002;
+    virtualMouseDeltaY += actualFlow.y * 0.002;
 
     cv::imshow(ImageProcessWindowName, prevCaptured);
     cv::waitKey(1);
+
     prevCaptured = captured;
 }
 
@@ -46,6 +50,7 @@ cv::Point2f ImageProcessor::calculateFlow()
     sumFlow[sumFlowIndex] = cv::sum(flowVectors) + cv::sum(flowVectors2);
     sumFlow[sumFlowIndex] /= 5000.0;
     sumFlowIndex = (sumFlowIndex + 1) % memoryLength;
+
     for (int i = 0; i<memoryLength; i++)
     {
         accFlow.x += sumFlow[i][0];
