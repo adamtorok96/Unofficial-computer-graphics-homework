@@ -1,6 +1,8 @@
 #include "CameraWindow.h"
 
 void CameraWindow::init() {
+    posCursor = Point(width / 2, height / 2);
+
     videoCapture.open(0);
 
     namedWindow(cameraWindowName, CV_WINDOW_AUTOSIZE);
@@ -44,7 +46,7 @@ Point2f CameraWindow::calculateFlow() {
 
     sumFlowIndex = (sumFlowIndex + 1) % memoryLength;
 
-    for (int i = 0; i< memoryLength; i++) {
+    for (int i = 0; i < memoryLength; i++) {
         accFlow.x += sumFlow[i][0];
         accFlow.y += sumFlow[i][1];
     }
@@ -55,6 +57,9 @@ Point2f CameraWindow::calculateFlow() {
     if (fabs(accFlow.y) < 20.0)
         accFlow.y = 0;
 
+
+    Point2f vector(accFlow.x, accFlow.y);
+
     line(
             prevFrame,
             Point(prevFrame.cols / 2, prevFrame.rows / 2),
@@ -63,13 +68,42 @@ Point2f CameraWindow::calculateFlow() {
             5
     );
 
+    norm(vector);
+
+    //printf("vec: %f %f %d %d\n", vector.x, vector.y, posCursor.x, posCursor.y);
+
+    if( accFlow.x != 0 )
+        posCursor.x += vector.x * 0.008;
+
+    if( accFlow.y != 0 )
+        posCursor.y += vector.y * 0.008;
+
+    if( posCursor.x > width )
+        posCursor.x = width;
+    else if( posCursor.x < 0 )
+        posCursor.x = 0;
+
+    if( posCursor.y > height )
+        posCursor.y = height;
+    else if( posCursor.y < 0 )
+        posCursor.y = 0;
+
+    circle(
+            prevFrame,
+            posCursor,
+            10,
+            Scalar(0, 0, 255),
+            2
+    );
+
     const int step = 10;
 
     for (int i = 0; i < flowVectors.rows; i += step)
     {
-        for (int j = 0; j<flowVectors.cols; j += step)
+        for (int j = 0; j < flowVectors.cols; j += step)
         {
             const Point2f& fxy = flowVectors.at<Point2f>(i, j);
+
             line(
                     prevFrame,
                     Point(j, i),

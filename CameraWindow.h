@@ -9,7 +9,7 @@ using namespace cv;
 
 class CameraWindow : public GameElement {
 
-    static const int width = 320;
+    static const int width  = 320;
     static const int height = 240;
 
     static const int memoryLength = 3;
@@ -20,11 +20,14 @@ class CameraWindow : public GameElement {
     int sumFlowIndex = 0;
 
     VideoCapture videoCapture;
+
     Mat
             frame,
             frameGray,
             prevFrame,
             prevFrameGray;
+
+    Point posCursor;
 
     Point2f calculateFlow();
 
