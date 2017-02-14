@@ -25,7 +25,7 @@ void CameraWindow::render() {
 
     prevFrame = frame;
 }
-
+// Source: http://study.marearts.com/2014/04/opencv-study-calcopticalflowfarneback.html
 Point2f CameraWindow::calculateFlow() {
 
     Mat flowVectors, flowVectors2;
