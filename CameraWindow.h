@@ -12,7 +12,7 @@ class CameraWindow : public GameElement {
     static const int width  = 320;
     static const int height = 240;
 
-    static const int memoryLength = 3;
+    static const int memoryLength = 5;
 
     const char *cameraWindowName = "Camera";
 

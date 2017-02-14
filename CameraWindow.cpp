@@ -70,12 +70,22 @@ Point2f CameraWindow::calculateFlow() {
 
     norm(vector);
 
-    //printf("vec: %f %f %d %d\n", vector.x, vector.y, posCursor.x, posCursor.y);
+    line(
+            prevFrame,
+            Point(prevFrame.cols / 2, prevFrame.rows / 2),
+            Point(prevFrame.cols / 2 + vector.x * 2, prevFrame.rows / 2 + vector.y * 2),
+            Scalar(0, 0, 255),
+            5
+    );
 
-    if( accFlow.x != 0 )
+    printf("vec: %f %f %d %d\n", vector.x, vector.y, posCursor.x, posCursor.y);
+
+    //vector *= 0.008;
+
+    //if( accFlow.x != 0 )
         posCursor.x += vector.x * 0.008;
 
-    if( accFlow.y != 0 )
+    //if( accFlow.y != 0 )
         posCursor.y += vector.y * 0.008;
 
     if( posCursor.x > width )
