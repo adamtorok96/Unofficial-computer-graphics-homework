@@ -3,7 +3,8 @@
 void CameraWindow::init() {
     posCursor = Point(width / 2, height / 2);
 
-    videoCapture.open("http://213.16.87.163:8092/axis-cgi/mjpg/video.cgi?resolution=640x480");
+    //videoCapture.open("http://213.16.87.163:8092/axis-cgi/mjpg/video.cgi?resolution=640x480");
+    videoCapture.open(0);
 
     if( !videoCapture.isOpened() ) {
         printf("Failed to open\n"); return ;

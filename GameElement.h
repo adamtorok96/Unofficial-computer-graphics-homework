@@ -1,8 +1,7 @@
-#ifndef SHADOW_GAMEELEMENT_H
-#define SHADOW_GAMEELEMENT_H
+#ifndef SHADOW_GAME_ELEMENT_H
+#define SHADOW_GAME_ELEMENT_H
 
-class GameElement
-{
+class GameElement {
 
 public:
     virtual void init() = 0;

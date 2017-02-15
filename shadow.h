@@ -17,15 +17,6 @@
 
 using namespace std;
 
-GameControl gameController;
-ImageProcessor imageProcessor;
-
-Avatar interceptor(&gameController, &imageProcessor);
-CrawlerScroll crawler(&gameController);
-Logo logo;
-
-CameraWindow cameraWindow;
-
 void display(void);
 void idle();
 void reshape(int w, int h);
