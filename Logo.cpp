@@ -14,5 +14,5 @@ void Logo::render() {
     glLoadIdentity();
 
     glRasterPos3f(-0.55f, 0.475, -1.f);
-    glDrawPixels(SIZE, SIZE, GL_BGRA, GL_UNSIGNED_BYTE, image.data);
+    glDrawPixels(SIZE, SIZE, GL_BGRA_EXT, GL_UNSIGNED_BYTE, image.data);
 }

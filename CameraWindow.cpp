@@ -3,7 +3,11 @@
 void CameraWindow::init() {
     posCursor = Point(width / 2, height / 2);
 
-    videoCapture.open(0);
+    videoCapture.open("http://213.16.87.163:8092/axis-cgi/mjpg/video.cgi?resolution=640x480");
+
+    if( !videoCapture.isOpened() ) {
+        printf("Failed to open\n"); return ;
+    }
 
     namedWindow(cameraWindowName, CV_WINDOW_AUTOSIZE);
 
@@ -42,7 +46,7 @@ Point2f CameraWindow::calculateFlow() {
     threshold(flowVectors, flowVectors, -1.0, 0, THRESH_TOZERO_INV);
 
     sumFlow[sumFlowIndex] = sum(flowVectors) + sum(flowVectors2);
-    sumFlow[sumFlowIndex] /= 5000.0;
+    sumFlow[sumFlowIndex] /= 5000.0;  //5000.0
 
     sumFlowIndex = (sumFlowIndex + 1) % memoryLength;
 
@@ -73,12 +77,12 @@ Point2f CameraWindow::calculateFlow() {
     line(
             prevFrame,
             Point(prevFrame.cols / 2, prevFrame.rows / 2),
-            Point(prevFrame.cols / 2 + vector.x * 2, prevFrame.rows / 2 + vector.y * 2),
+            Point(prevFrame.cols / 2 + vector.x * 0.5f, prevFrame.rows / 2 + vector.y * 0.5f),
             Scalar(0, 0, 255),
             5
     );
 
-    printf("vec: %f %f %d %d\n", vector.x, vector.y, posCursor.x, posCursor.y);
+    //printf("vec: %f %f %d %d\n", vector.x, vector.y, posCursor.x, posCursor.y);
 
     //vector *= 0.008;
 
