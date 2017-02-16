@@ -17,6 +17,6 @@ include_directories({$GLUT_INCLUDE_DIRS})
 
 add_executable(shadow
 shadow.cpp
-        ImageSource.h FileImageSource.cpp FileImageSource.h WebcamImageSource.cpp WebcamImageSource.h GameControl.cpp GameControl.h GameElement.h ImageProcessor.cpp ImageProcessor.h Avatar.cpp Avatar.h CrawlerScroll.cpp CrawlerScroll.h shadow.h utility2d3d.cpp Mesh.cpp Mesh.h Logo.cpp Logo.h CameraWindow.cpp CameraWindow.h Vector.cpp Vector.h)
+        ImageSource.h FileImageSource.cpp FileImageSource.h WebcamImageSource.cpp WebcamImageSource.h GameControl.cpp GameControl.h GameElement.h ImageProcessor.cpp ImageProcessor.h Avatar.cpp Avatar.h CrawlerScroll.cpp CrawlerScroll.h shadow.h utility2d3d.cpp Mesh.cpp Mesh.h Logo.cpp Logo.h CameraWindow.cpp CameraWindow.h Vector.cpp Vector.h BSP/BSP.cpp BSP/BSP.h BSP/BSPHeader.h)
 
 target_link_libraries(shadow ${GLUT_LIBRARIES} ${OPENGL_LIBRARIES} GL ${GLEW_LIBRARIES} GLU ${OpenCV_LIBS} opencv_core opencv_imgcodecs opencv_imgproc opencv_highgui opencv_video)

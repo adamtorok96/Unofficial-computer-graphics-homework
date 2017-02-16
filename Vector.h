@@ -16,10 +16,10 @@ public:
     Vector<T> operator*(T n);
     Vector<T> operator/(T n);
 
-/*
-    Vector<T> operator+(Vector<T> const & a, Vector<T> const & b);
-    Vector<T> operator-(Vector<T> const & a, Vector<T> const & b);
-*/
+
+    Vector<T> operator+(Vector<T> const & v);
+    Vector<T> operator-(Vector<T> const & v);
+
 
     void operator+=(T n);
     void operator-=(T n);
@@ -33,5 +33,10 @@ public:
     T dot(Vector<T> const & v);
     Vector<T> cross(Vector<T> const & v);
 };
+
+
+typedef Vector<int> Vectori;
+typedef Vector<float> Vectorf;
+typedef Vector<double> Vectord;
 
 #endif //SHADOW_VECTOR_H

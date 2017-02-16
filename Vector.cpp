@@ -42,25 +42,24 @@ Vector<T> Vector<T>::operator/(T n) {
             z / n
     );
 }
-/*
+
 template <class T>
-Vector<T> Vector<T>::operator+(Vector const & a, Vector const & b) {
+Vector<T> Vector<T>::operator+(Vector const & v) {
     return Vector<T>(
-            a.x + b.x,
-            a.y + b.y,
-            a.z + b.z
+            x + v.x,
+            y + v.y,
+            z + v.z
     );
 }
 
 template <class T>
-Vector<T> Vector<T>::operator-(Vector const & a, Vector const & b) {
+Vector<T> Vector<T>::operator-(Vector const & v) {
     return Vector<T>(
-            a.x - b.x,
-            a.y - b.y,
-            a.z - b.z
+            x - v.x,
+            y - v.y,
+            z - v.z
     );
 }
-*/
 
 template <class T>
 void Vector<T>::operator+=(T n) {

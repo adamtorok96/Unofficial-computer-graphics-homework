@@ -73,7 +73,7 @@ Point2f CameraWindow::calculateFlow() {
             5
     );
 
-    norm(vector);
+    //norm(vector);
 
     line(
             prevFrame,
@@ -88,11 +88,12 @@ Point2f CameraWindow::calculateFlow() {
     //vector *= 0.008;
 
     //if( accFlow.x != 0 )
-        posCursor.x += vector.x * 0.008;
+        posCursor.x += vector.x;// * 0.008;
 
     //if( accFlow.y != 0 )
-        posCursor.y += vector.y * 0.008;
+        posCursor.y += vector.y;// * 0.008;
 
+    /*
     if( posCursor.x > width )
         posCursor.x = width;
     else if( posCursor.x < 0 )
@@ -102,7 +103,7 @@ Point2f CameraWindow::calculateFlow() {
         posCursor.y = height;
     else if( posCursor.y < 0 )
         posCursor.y = 0;
-
+*/
     circle(
             prevFrame,
             posCursor,
@@ -119,13 +120,15 @@ Point2f CameraWindow::calculateFlow() {
         {
             const Point2f& fxy = flowVectors.at<Point2f>(i, j);
 
-            line(
-                    prevFrame,
-                    Point(j, i),
-                    Point((int) (j + fxy.x), (int) (i + fxy.y)),
-                    Scalar(0, 255, 0),
-                    1
-            );
+            if( fxy.x != 0 && fxy.y != 0 ) {
+                line(
+                        prevFrame,
+                        Point(j, i),
+                        Point((int) (j + fxy.x), (int) (i + fxy.y)),
+                        Scalar(0, 255, 0),
+                        1
+                );
+            }
         }
     }
 
