@@ -127,3 +127,5 @@ Vector<T> Vector<T>::cross(Vector<T> const & v) {
             x * v.y - y * v.x
     );
 }
+
+template class Vector<float>;

@@ -1,29 +1,28 @@
 #ifndef SHADOW_AVATAR_H
 #define SHADOW_AVATAR_H
 
+#include <opencv2/opencv.hpp>
 
 #include "GameElement.h"
 #include "Mesh.h"
-#include "GameControl.h"
-#include "ImageProcessor.h"
 
+using namespace cv;
 
 class Avatar : public GameElement {
 
-    GameControl *gameController;
-    ImageProcessor *imageProcessor;
-
     Mesh spaceShip;
+    Point2f position;
+
+    bool fire;
 
     void transform();
 
 public:
 
-    Avatar(GameControl *gameControl, ImageProcessor *imgProcessor);
-
     void init();
     void render();
 
+    Point2f& getPosition();
 };
 
 

@@ -15,8 +15,6 @@
 #include "Logo.h"
 #include "CameraWindow.h"
 
-using namespace std;
-
 void display(void);
 void idle();
 void reshape(int w, int h);

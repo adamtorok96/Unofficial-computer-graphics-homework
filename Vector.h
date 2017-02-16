@@ -9,7 +9,7 @@ class Vector {
 public:
     T x, y, z;
 
-    Vector(T x = 0, T y = 0, T z = 0);
+    Vector(T x = 0.0f, T y = 0.0f, T z = 0.0f);
 
     Vector<T> operator+(T n);
     Vector<T> operator-(T n);
@@ -19,7 +19,6 @@ public:
 
     Vector<T> operator+(Vector<T> const & v);
     Vector<T> operator-(Vector<T> const & v);
-
 
     void operator+=(T n);
     void operator-=(T n);
@@ -34,9 +33,11 @@ public:
     Vector<T> cross(Vector<T> const & v);
 };
 
-
-typedef Vector<int> Vectori;
-typedef Vector<float> Vectorf;
-typedef Vector<double> Vectord;
+typedef Vector<char> Vector3c;
+typedef Vector<unsigned char> Vector3uc;
+typedef Vector<int> Vector3i;
+typedef Vector<unsigned int> Vector3ui;
+typedef Vector<float> Vector3f;
+typedef Vector<double> Vector3d;
 
 #endif //SHADOW_VECTOR_H
