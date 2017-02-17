@@ -21,7 +21,7 @@ class CameraWindow : public GameElement {
 
     VideoCapture videoCapture;
 
-    CascadeClassifier cascade;
+    CascadeClassifier cascade, nestedCascade;
 
     Mat
             frame,
@@ -29,11 +29,14 @@ class CameraWindow : public GameElement {
             prevFrame,
             prevFrameGray;
 
+    Mat sunglasses;
+
     Point posCursor;
     Point2f flow;
 
     Point2f calculateFlow();
-    void detectFace();
+    void detectFaces();
+    void drawFace(Mat image, Rect face);
 
 public:
     void init();

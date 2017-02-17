@@ -61,7 +61,7 @@ void display(void)
     interceptor.getPosition().x += cameraWindow.getFlow().x * 0.0015f;
     interceptor.getPosition().y += cameraWindow.getFlow().y * 0.0015f;
 
-    map.render();
+    //map.render();
 
     interceptor.render();
     logo.render();
@@ -84,7 +84,7 @@ void reshape(int w, int h)
 
 void init(void)
 {
-    map.read("/home/edems/.q3a/baseq3/cube.bsp");
+    //map.read("/home/edems/.q3a/baseq3/cube.bsp");
 
     interceptor.init();
     logo.init();

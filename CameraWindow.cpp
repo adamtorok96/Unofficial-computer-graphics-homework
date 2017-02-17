@@ -3,6 +3,14 @@
 void CameraWindow::init() {
     posCursor = Point(width / 2, height / 2);
 
+    if( !cascade.load("assets/haarcascade_frontalface_alt.xml") )
+        printf("Failed to load cascade #1");
+
+    if( !nestedCascade.load("assets/haarcascade_eye_tree_eyeglasses.xml") )
+        printf("Failed to load cascahde #2");
+
+    sunglasses = imread("assets/sung.png", CV_LOAD_IMAGE_UNCHANGED);
+
     //videoCapture.open("http://213.16.87.163:8092/axis-cgi/mjpg/video.cgi?resolution=640x480");
     videoCapture.open(0);
 
@@ -18,14 +26,38 @@ void CameraWindow::init() {
     flip(prevFrame, prevFrame, 1);
 }
 
+void copyRgba(Mat &src, Mat &dst) {
+
+    for(auto h = 0; h < src.rows; h++) {
+        for(auto w = 0; w < src.cols; w++) {
+
+             if( src.at<cv::Vec4b>(w, h)[3] == 0 )
+                 continue;
+
+            dst.at<Vec3b>(w, h) = src.at<Vec3b>(w, h);
+        }
+    }
+}
+
 void CameraWindow::render() {
     videoCapture.read(frame);
 
     resize(frame, frame, Size(width, height));
     flip(frame, frame, 1);
 
-    flow = calculateFlow();
+    //cvtColor(frame, frame, COLOR_RGB2RGBA);
+    cvtColor(prevFrame, prevFrameGray, COLOR_RGB2GRAY);
+    cvtColor(frame, frameGray, COLOR_RGB2GRAY);
 
+    //flow = calculateFlow();
+
+    detectFaces();
+/*
+    cvtColor(prevFrame, prevFrame, COLOR_RGB2RGBA, 4);
+    resize(sunglasses, sunglasses, Size(50, 50));
+    copyRgba(sunglasses, prevFrame);
+    //sunglasses.copyTo(prevFrame(Rect(0, 0, sunglasses.cols, sunglasses.rows)));
+*/
     imshow(cameraWindowName, prevFrame);
 
     waitKey(1);
@@ -38,9 +70,6 @@ Point2f CameraWindow::calculateFlow() {
 
     Mat flowVectors, flowVectors2;
     Point2f accFlow(0, 0);
-
-    cvtColor(prevFrame, prevFrameGray, COLOR_RGB2GRAY);
-    cvtColor(frame, frameGray, COLOR_RGB2GRAY);
 
     calcOpticalFlowFarneback(prevFrameGray, frameGray, flowVectors, 0.5, 3, 15, 3, 5, 1.2, 0);
 
@@ -127,77 +156,75 @@ Point2f CameraWindow::getFlow() {
     return flow;
 }
 
-void CameraWindow::detectFace() {
-/*
-    std::vector<Rect> faces, faces2;
-
-    const static Scalar colors[] =
-            {
-                    Scalar(255,0,0),
-                    Scalar(255,128,0),
-                    Scalar(255,255,0),
-                    Scalar(0,255,0),
-                    Scalar(0,128,255),
-                    Scalar(0,255,255),
-                    Scalar(0,0,255),
-                    Scalar(255,0,255)
-            };
+void CameraWindow::detectFaces() {
+    std::vector<Rect> faces;
 
     Mat smallImg;
 
-    double fx = 1; // / scale;
-
-    resize(prevFrameGray, smallImg, Size(), fx, fx, INTER_LINEAR );
+    smallImg = prevFrameGray.clone();
     equalizeHist( smallImg, smallImg );
 
-    cascade.detectMultiScale( smallImg, faces,
-                              1.1, 2, 0
-                                      //|CASCADE_FIND_BIGGEST_OBJECT
-                                      //|CASCADE_DO_ROUGH_SEARCH
-                                      |CASCADE_SCALE_IMAGE,
-                              Size(30, 30) );
+    cascade.detectMultiScale(
+            smallImg,
+            faces,
+            1.1,
+            2,
+            0
+           //|CASCADE_FIND_BIGGEST_OBJECT
+           //|CASCADE_DO_ROUGH_SEARCH
+            | CASCADE_SCALE_IMAGE,
+            Size(30, 30)
+    );
 
+    if( faces.size() )
+        drawFace(smallImg(faces[0]), faces[0]);
+}
 
-    for ( size_t i = 0; i < faces.size(); i++ )
+void CameraWindow::drawFace(Mat image, Rect face) {
+    std::vector<Rect> nestedObjects;
+    Point center;
+    Scalar color = Scalar(0, 255, 0);
+    int radius;
+
+    /*
+    double aspect_ratio = (double)r.width/r.height;
+    if( 0.75 < aspect_ratio && aspect_ratio < 1.3 )
     {
-        Rect r = faces[i];
-        Mat smallImgROI;
-        std::vector<Rect> nestedObjects;
-        Point center;
-        Scalar color = colors[i%8];
-        int radius;
+        center.x = cvRound((r.x + r.width*0.5));
+        center.y = cvRound((r.y + r.height*0.5));
+        radius = cvRound((r.width + r.height)*0.25);
+        circle(prevFrame, center, radius, color, 3, 8, 0 );
+    }
+    else
+        rectangle( prevFrame, cvPoint(cvRound(r.x), cvRound(r.y)),
+                   cvPoint(cvRound((r.x + r.width-1)), cvRound((r.y + r.height-1))),
+                   color, 3, 8, 0);
 
-        double aspect_ratio = (double)r.width/r.height;
-        if( 0.75 < aspect_ratio && aspect_ratio < 1.3 )
-        {
-            center.x = cvRound((r.x + r.width*0.5));
-            center.y = cvRound((r.y + r.height*0.5));
-            radius = cvRound((r.width + r.height)*0.25);
-            circle(prevFrame, center, radius, color, 3, 8, 0 );
-        }
-        else
-            rectangle( prevFrame, cvPoint(cvRound(r.x), cvRound(r.y)),
-                       cvPoint(cvRound((r.x + r.width-1)), cvRound((r.y + r.height-1))),
-                       color, 3, 8, 0);
-        if( nestedCascade.empty() )
-            continue;
-        smallImgROI = smallImg( r );
-        nestedCascade.detectMultiScale( smallImgROI, nestedObjects,
-                                        1.1, 2, 0
-                                                //|CASCADE_FIND_BIGGEST_OBJECT
-                                                //|CASCADE_DO_ROUGH_SEARCH
-                                                //|CASCADE_DO_CANNY_PRUNING
-                                                |CASCADE_SCALE_IMAGE,
-                                        Size(30, 30) );
+    if( nestedCascade.empty() )
+        continue;
+    */
 
-        /*
-        for ( size_t j = 0; j < nestedObjects.size(); j++ )
-        {
-            Rect nr = nestedObjects[j];
-            center.x = cvRound((r.x + nr.x + nr.width*0.5)*scale);
-            center.y = cvRound((r.y + nr.y + nr.height*0.5)*scale);
-            radius = cvRound((nr.width + nr.height)*0.25*scale);
-            circle( img, center, radius, color, 3, 8, 0 );
-        }*/
-  //  } 
+    nestedCascade.detectMultiScale(
+            image,
+            nestedObjects,
+            1.1,
+            2,
+            0
+            //|CASCADE_FIND_BIGGEST_OBJECT
+            //|CASCADE_DO_ROUGH_SEARCH
+            //|CASCADE_DO_CANNY_PRUNING
+            | CASCADE_SCALE_IMAGE,
+            Size(30, 30) );
+
+
+    for (size_t j = 0; j < min(2, (int)nestedObjects.size()); j++ ) { //nestedObjects.size()
+        Rect nr = nestedObjects[j];
+
+        center.x = cvRound((face.x + nr.x + nr.width*0.5));
+        center.y = cvRound((face.y + nr.y + nr.height*0.5));
+
+        radius = cvRound((nr.width + nr.height)*0.25);
+
+        circle(prevFrame, center, radius, color, 3, 8, 0 );
+    }
 }
